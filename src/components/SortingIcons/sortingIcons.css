@@ -1,0 +1,8 @@
+.sorting-icon {
+    cursor: pointer;
+}
+
+.neutral-icon-container {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,26 +1,63 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Table } from "./components"
+import { RowSpacing, TextAlignment } from './components/Cell';
+import { RowData } from './components/Row';
+import { ContextValues, SelectionContext } from './context';
+import "./app.css"
+
 
 function App() {
+
+  const headerTitles = ["Item", "Qty", "Cost"]
+  const rowsData: RowData[] = [
+    {
+      dataHref: "https://www.youtube.com/watch?v=orfVr0_SfJg",
+      data: ["Apples", "5", "0.40"]
+    },
+    {
+      dataHref: "https://www.youtube.com/watch?v=6BdKUO2QbA0",
+      data: ["Oranges", "3", "0.60"]
+    },
+    {
+      dataHref: "https://www.youtube.com/watch?v=6BdKUO2QbA0",
+      data: ["Bananas", "8", "0.50"]
+    }
+  ]
+
+  const selectedItem = useSelectionProvider()
+
+  const rowSpacing = RowSpacing.Regular
+
+  const showSelectionBox = false
+
+  const textAlignment = TextAlignment.Left
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div><p>Oh, hello, here's a table...</p>
+      <div className="table-container">
+        <SelectionContext.Provider value={selectedItem}>
+          <Table
+          headerTitles={headerTitles}
+          rowsData={rowsData}
+          rowSpacing={rowSpacing}
+          selectionBox={showSelectionBox}
+          textAlignment={textAlignment}
+          />
+        </SelectionContext.Provider>
+      </div>
     </div>
   );
+}
+
+
+
+function useSelectionProvider(): ContextValues {
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
+
+  return {
+    selectedIndex,
+    setSelectedIndex
+  }
 }
 
 export default App;

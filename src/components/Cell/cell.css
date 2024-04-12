@@ -1,0 +1,21 @@
+.left-alignment {
+    text-align: left;
+}
+
+.centre-alignment {
+    text-align: center;
+}
+
+.right-alignment {
+    text-align: right;
+}
+
+
+.cell-link {
+    text-decoration: none;
+}
+
+.data-container {
+    width: 100%;
+    height: 100%;
+}

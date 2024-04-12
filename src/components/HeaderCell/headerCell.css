@@ -1,0 +1,8 @@
+.header-cell-container {
+    display: flex;
+    align-items: center;
+}
+
+svg {
+    margin-left: 1rem;
+}
