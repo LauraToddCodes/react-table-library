@@ -10,14 +10,13 @@ export type HeaderData = {
 }
 
 export enum SortingStatus {
-  Up,
-  Down,
-  Neutral
+  Up = "up",
+  Down = "down",
+  Neutral = "neutral"
 }
 
 type Props = {
   handleIconClick: () => void
-  // headerIndex: number
   sortingStatus: SortingStatus
   textAlignment: TextAlignment
   title: string
@@ -27,27 +26,14 @@ export function HeaderCell(props: Props) {
     const { handleIconClick, sortingStatus, textAlignment, title } = props
 
     const textAlignmentClass = getTextAlignment(textAlignment)
-
-    const [icon, setIcon] = useState(SortingStatus.Neutral)
-
-    function toggleIcon() {
-      setIcon(prevIcon => getNewIcon(prevIcon))
-      handleIconClick()
-    }
-
-    function getNewIcon(currentStatus: SortingStatus): SortingStatus {
-      if (currentStatus === SortingStatus.Neutral) return SortingStatus.Down
-      else if (currentStatus === SortingStatus.Down) return SortingStatus.Up
-      else return SortingStatus.Neutral
-  }
-
+    
   return (
-    <th className={textAlignmentClass} onClick={toggleIcon}>
+    <th className={textAlignmentClass} onClick={handleIconClick}>
       <div className="header-cell-container">
       {title}
-      {icon === SortingStatus.Neutral && <NeutralIcon />}
-      {icon === SortingStatus.Up &&  <UpIcon />}
-      {icon === SortingStatus.Down && <DownIcon />}
+      {sortingStatus === SortingStatus.Neutral && <NeutralIcon />}
+      {sortingStatus === SortingStatus.Up &&  <UpIcon />}
+      {sortingStatus === SortingStatus.Down && <DownIcon />}
       </div>
     </th>
   )

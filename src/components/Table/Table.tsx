@@ -26,14 +26,32 @@ export function Table(props: Props) {
 
     const [headerData, setHeaderData] = useState(initialHeaderData)
 
+    const [tableData, setTableData] = useState(rowsData)
+
     function handleIconClick(index: number) {
         setHeaderData(prevData => {
-            const updatedData = [...prevData]
-            updatedData[index] = {...updatedData[index], sortingStatus: getNewStatus(headerData[index].sortingStatus)}
+            const updatedData =  prevData.map((item, i) => {
+                if (i === index) {
+                    return {...item, sortingStatus: getNewStatus(item.sortingStatus)}
+                } else return {...item, sortingStatus: SortingStatus.Neutral}
+            })
             return updatedData
         })
-    }
 
+        const newSortingStatus = getNewStatus(headerData[index].sortingStatus)
+
+        if (newSortingStatus === SortingStatus.Down) {
+            const sortedData = tableData.sort((a, b) => a.data[index].localeCompare(b.data[index]))
+            setTableData(sortedData)
+        } else if (newSortingStatus === SortingStatus.Up) {
+            const sortedData = tableData.sort((a, b) => b.data[index].localeCompare(a.data[index]))
+            setTableData(sortedData)
+        } else {
+            setTableData(rowsData)
+        }
+
+    }
+    
     function getNewStatus(currentStatus: SortingStatus): SortingStatus {
         if (currentStatus === SortingStatus.Neutral) return SortingStatus.Down
         else if (currentStatus === SortingStatus.Down) return SortingStatus.Up
